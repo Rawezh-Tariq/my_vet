@@ -70,7 +70,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           hintText: 'Email'),
                       const SizedBox(height: 16.0),
                       TextFieldWidget(
-                          validator: validatorProviderNotifier.emailValidator,
+                          validator: validatorProviderNotifier.phoneValidator,
                           controller: phoneController,
                           obscureText: false,
                           keyboardType: TextInputType.phone,
@@ -78,7 +78,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           hintText: 'Phone'),
                       const SizedBox(height: 16.0),
                       TextFieldWidget(
-                          validator: validatorProviderNotifier.emailValidator,
+                          validator:
+                              validatorProviderNotifier.passwordValidator,
                           controller: passwordController,
                           obscureText: true,
                           keyboardType: TextInputType.visiblePassword,
@@ -86,7 +87,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           hintText: 'password'),
                       const SizedBox(height: 32.0),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          validatorProviderNotifier
+                              .formSubmit(formKey.currentState);
+                        },
                         child: const Text(
                           'Sign In',
                           style: TextStyle(color: Colors.white),

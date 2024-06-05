@@ -6,11 +6,6 @@ import 'package:my_vet/providers/location_provider.dart';
 import 'package:my_vet/providers/user_role_provider.dart';
 import 'package:my_vet/widgets/textfield_widget.dart';
 
-enum Location {
-  slemani,
-  hawler,
-}
-
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
@@ -42,7 +37,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Widget build(BuildContext context) {
     final validatorProviderNotifier = ref.watch(validatorProvider.notifier);
     final location = ref.watch(locationProvider.notifier);
-    final role = ref.read(userRoleProvider);
+    final roleProvider = ref.read(userRoleProvider);
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -75,7 +71,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: Column(
                     children: [
                       TextFieldWidget(
-                        validator: validatorProviderNotifier.emailValidator,
+                        validator: validatorProviderNotifier.nameValidator,
                         controller: nameController,
                         obscureText: false,
                         keyboardType: TextInputType.name,
@@ -84,7 +80,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       ),
                       const SizedBox(height: 16.0),
                       TextFieldWidget(
-                          validator: validatorProviderNotifier.emailValidator,
+                          validator: validatorProviderNotifier.phoneValidator,
                           controller: phoneController,
                           obscureText: false,
                           keyboardType: TextInputType.phone,
@@ -92,6 +88,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           hintText: 'Phone Number'),
                       const SizedBox(height: 16.0),
                       DropdownButtonFormField(
+                        validator: validatorProviderNotifier.locationValidator,
                         decoration: const InputDecoration(
                           suffixIcon: Icon(Icons.location_on_outlined),
                         ),
@@ -105,7 +102,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         ),
                         items: [
                           DropdownMenuItem(
-                            value: Location.slemani,
+                            value: 'slemani',
                             child: Text(
                               'Slemani',
                               style: Theme.of(context)
@@ -115,7 +112,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             ),
                           ),
                           DropdownMenuItem(
-                            value: Location.hawler,
+                            value: 'hawler',
                             child: Text(
                               'Hawler',
                               style: Theme.of(context)
@@ -127,7 +124,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         ],
                         onChanged: (value) {
                           if (value != null) {
-                            location.state = value.name;
+                            location.state = value;
                           }
                         },
                       ),
@@ -141,14 +138,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           hintText: 'Email'),
                       const SizedBox(height: 16.0),
                       TextFieldWidget(
-                          validator: validatorProviderNotifier.emailValidator,
+                          validator:
+                              validatorProviderNotifier.passwordValidator,
                           controller: passwordController,
                           obscureText: true,
                           keyboardType: TextInputType.visiblePassword,
                           icon: Icons.lock_outline,
                           hintText: 'Password'),
                       const SizedBox(height: 32.0),
-                      if (role == 'doctor' || role == 'driver')
+                      if (roleProvider == 'doctor' || roleProvider == 'driver')
                         Column(
                           children: [
                             TextFieldWidget(
