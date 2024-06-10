@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_vet/providers/auth_provider.dart';
 import 'package:my_vet/providers/form_validation_provider.dart';
-import 'package:my_vet/providers/address_provider.dart';
-import 'package:my_vet/providers/user_role_provider.dart';
+import 'package:my_vet/providers/value_providers.dart';
 import 'package:my_vet/widgets/textfield_widget.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_vet/providers/auth_provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -12,17 +12,34 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final auth = ref.watch(authProvider.notifier);
     return Scaffold(
+      drawer: const Drawer(),
       appBar: AppBar(
         title: const Text('Home Page'),
+        actions: const [
+          CircleAvatar(
+            child: Icon(Icons.person),
+          ),
+        ],
       ),
-      body: Center(
-        child: TextButton(
-            onPressed: () {
-              auth.signOut();
-            },
-            child: const Text('Home Page')),
+      body: Column(
+        children: [
+          TextButton(
+              onPressed: () {
+                Supabase.instance.client.auth.signOut();
+              },
+              child: const Text('Log Out')),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                'assets/images/veterinary.png',
+                width: 300,
+                height: 300,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

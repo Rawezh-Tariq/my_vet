@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:my_vet/providers/auth_provider.dart';
 import 'package:my_vet/providers/form_validation_provider.dart';
 import 'package:my_vet/widgets/textfield_widget.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
@@ -98,8 +97,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                             userAuthProvider.signIn(
                                 email: emailController.text,
                                 password: passwordController.text);
-                            print(
-                                ' the user is ssssssssssss ${Supabase.instance.client.auth.currentUser?.email}');
                           }
                         },
                         child: const Text(

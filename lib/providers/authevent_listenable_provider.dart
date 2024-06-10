@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class StreamListenable extends ChangeNotifier {
-  StreamListenable(Stream<AuthState> stream, Ref ref) {
+class AuthEventListenable extends ChangeNotifier {
+  AuthEventListenable(Stream<AuthState> stream) {
     subscription = stream.listen((data) {
       notifyListeners();
     });

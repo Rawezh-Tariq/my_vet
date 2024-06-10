@@ -36,4 +36,21 @@ ThemeData myTheme = ThemeData(
           WidgetStatePropertyAll(Color.fromARGB(237, 87, 126, 165)),
     ),
   ),
+  textButtonTheme: const TextButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor:
+          WidgetStatePropertyAll(Color.fromARGB(237, 87, 126, 165)),
+      textStyle: WidgetStatePropertyAll(
+        TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Color.fromARGB(237, 87, 126, 165),
+    selectedItemColor: Colors.white70,
+    unselectedItemColor: Colors.black,
+  ),
 );
