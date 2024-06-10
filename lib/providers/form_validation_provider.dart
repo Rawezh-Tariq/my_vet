@@ -24,9 +24,9 @@ class FormValidator extends Notifier<void> {
     return null;
   }
 
-  String? locationValidator(String? location) {
-    if (location == null || location == '') {
-      return 'Please select your location';
+  String? addressValidator(String? address) {
+    if (address == null || address == '') {
+      return 'Please select your address';
     }
     return null;
   }
@@ -51,7 +51,14 @@ class FormValidator extends Notifier<void> {
     return null;
   }
 
-  void formSubmit(FormState? formKeyState) {
-    formKeyState?.validate();
+  String? verificationIdValidator(String? verificationId) {
+    if (verificationId == null || verificationId == '') {
+      return 'Please enter your verification id';
+    }
+    return null;
+  }
+
+  bool formSubmit(FormState? formKeyState) {
+    return formKeyState?.validate() ?? false;
   }
 }

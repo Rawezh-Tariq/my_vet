@@ -20,6 +20,7 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: Theme.of(context).textTheme.bodyMedium,
       validator: validator,
       controller: controller,
       obscureText: obscureText,

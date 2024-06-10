@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_vet/providers/auth_provider.dart';
 import 'package:my_vet/providers/form_validation_provider.dart';
-import 'package:my_vet/providers/location_provider.dart';
+import 'package:my_vet/providers/address_provider.dart';
 import 'package:my_vet/providers/user_role_provider.dart';
 import 'package:my_vet/widgets/textfield_widget.dart';
 
@@ -17,7 +18,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
-  final locationController = TextEditingController();
+  final addressController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final verificationController = TextEditingController();
@@ -26,7 +27,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   void dispose() {
     nameController.dispose();
     phoneController.dispose();
-    locationController.dispose();
+    addressController.dispose();
     emailController.dispose();
     passwordController.dispose();
     verificationController.dispose();
@@ -35,8 +36,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final userAuthProvider = ref.watch(authProvider.notifier);
     final validatorProviderNotifier = ref.watch(validatorProvider.notifier);
-    final location = ref.watch(locationProvider.notifier);
+    final address = ref.watch(addressProvider.notifier);
     final roleProvider = ref.read(userRoleProvider);
 
     return Scaffold(
@@ -88,18 +90,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           hintText: 'Phone Number'),
                       const SizedBox(height: 16.0),
                       DropdownButtonFormField(
-                        validator: validatorProviderNotifier.locationValidator,
+                        validator: validatorProviderNotifier.addressValidator,
                         decoration: const InputDecoration(
                           suffixIcon: Icon(Icons.location_on_outlined),
                         ),
                         icon: const Spacer(),
-                        hint: Text(
-                          'Location',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
+                        hint: Text('address',
+                            style: Theme.of(context).textTheme.bodyMedium),
                         items: [
                           DropdownMenuItem(
                             value: 'slemani',
@@ -124,7 +121,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         ],
                         onChanged: (value) {
                           if (value != null) {
-                            location.state = value;
+                            address.state = value;
                           }
                         },
                       ),
@@ -150,8 +147,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         Column(
                           children: [
                             TextFieldWidget(
-                                validator:
-                                    validatorProviderNotifier.emailValidator,
+                                validator: validatorProviderNotifier
+                                    .verificationIdValidator,
                                 controller: verificationController,
                                 obscureText: true,
                                 keyboardType: TextInputType.visiblePassword,
@@ -161,10 +158,20 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           ],
                         ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           FocusScope.of(context).unfocus();
-                          validatorProviderNotifier
-                              .formSubmit(formKey.currentState);
+                          if (validatorProviderNotifier
+                              .formSubmit(formKey.currentState)) {
+                            userAuthProvider.signUp(
+                              name: nameController.text,
+                              phone: phoneController.text,
+                              address: address.state,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              role: roleProvider,
+                              verificationId: verificationController.text,
+                            );
+                          }
                         },
                         child: const Text(
                           'Sign Up',
@@ -187,7 +194,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              context.go('/');
+                              context.go('/greeting');
                             },
                             child: const Text(
                               'back',

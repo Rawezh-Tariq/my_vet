@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData myTheme = ThemeData(
   appBarTheme: const AppBarTheme(
-    color: Colors.blueAccent,
+    backgroundColor: Color.fromARGB(237, 87, 126, 165),
     centerTitle: true,
     titleTextStyle: TextStyle(
       color: Colors.white,

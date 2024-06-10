@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_vet/providers/auth_provider.dart';
 import 'package:my_vet/providers/form_validation_provider.dart';
 import 'package:my_vet/widgets/textfield_widget.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
@@ -28,6 +30,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    final userAuthProvider = ref.watch(authProvider.notifier);
     final validatorProviderNotifier = ref.watch(validatorProvider.notifier);
     return Scaffold(
       body: Center(
@@ -90,6 +93,14 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         onPressed: () {
                           validatorProviderNotifier
                               .formSubmit(formKey.currentState);
+
+                          if (formKey.currentState!.validate()) {
+                            userAuthProvider.signIn(
+                                email: emailController.text,
+                                password: passwordController.text);
+                            print(
+                                ' the user is ssssssssssss ${Supabase.instance.client.auth.currentUser?.email}');
+                          }
                         },
                         child: const Text(
                           'Sign In',
@@ -98,7 +109,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.go('/');
+                          context.go('/greeting');
                         },
                         child: const Text(
                           'Sign Up',

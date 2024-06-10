@@ -4,7 +4,7 @@ class Client {
   final String id;
   final String name;
   final String phone;
-  final String location;
+  final String address;
   final String email;
   final String password;
   final String role;
@@ -12,7 +12,7 @@ class Client {
     required this.id,
     required this.name,
     required this.phone,
-    required this.location,
+    required this.address,
     required this.email,
     required this.password,
     required this.role,
@@ -22,7 +22,7 @@ class Client {
     String? id,
     String? name,
     String? phone,
-    String? location,
+    String? address,
     String? email,
     String? password,
     String? role,
@@ -31,7 +31,7 @@ class Client {
       id: id ?? this.id,
       name: name ?? this.name,
       phone: phone ?? this.phone,
-      location: location ?? this.location,
+      address: address ?? this.address,
       email: email ?? this.email,
       password: password ?? this.password,
       role: role ?? this.role,
@@ -43,7 +43,7 @@ class Client {
       'id': id,
       'name': name,
       'phone': phone,
-      'location': location,
+      'address': address,
       'email': email,
       'password': password,
       'role': role,
@@ -55,7 +55,7 @@ class Client {
       id: map['id'] as String,
       name: map['name'] as String,
       phone: map['phone'] as String,
-      location: map['location'] as String,
+      address: map['address'] as String,
       email: map['email'] as String,
       password: map['password'] as String,
       role: map['role'] as String,
@@ -69,7 +69,7 @@ class Client {
 
   @override
   String toString() {
-    return 'Client(id: $id, name: $name, phone: $phone, location: $location, email: $email, password: $password, role: $role)';
+    return 'Client(id: $id, name: $name, phone: $phone, address: $address, email: $email, password: $password, role: $role)';
   }
 
   @override
@@ -79,7 +79,7 @@ class Client {
     return other.id == id &&
         other.name == name &&
         other.phone == phone &&
-        other.location == location &&
+        other.address == address &&
         other.email == email &&
         other.password == password &&
         other.role == role;
@@ -90,7 +90,7 @@ class Client {
     return id.hashCode ^
         name.hashCode ^
         phone.hashCode ^
-        location.hashCode ^
+        address.hashCode ^
         email.hashCode ^
         password.hashCode ^
         role.hashCode;
