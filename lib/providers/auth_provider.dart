@@ -16,23 +16,23 @@ class AuthProvider extends AsyncNotifier<void> {
       required String password,
       required String role,
       required String? verificationId}) async {
-    await supabase.auth
-        .signUp(
-          email: email,
-          password: password,
-        )
-        .then((_) => {
-              supabase.auth.signInWithPassword(email: email, password: password)
-            });
+    const AsyncValue.loading();
+    AsyncValue.guard(() async {
+      await supabase.auth.signUp(
+        email: email,
+        password: password,
+      );
 
-    await supabase.from('users').insert({
-      'name': name,
-      'phone': phone,
-      'address': address,
-      'email': email,
-      'password': password,
-      'role': role,
-      'verification_id': verificationId,
+      await supabase.from('users').insert({
+        'id': supabase.auth.currentUser!.id,
+        'name': name,
+        'phone': phone,
+        'address': address,
+        'email': email,
+        'password': password,
+        'role': role,
+        'verification_id': verificationId,
+      });
     });
   }
 
@@ -40,10 +40,16 @@ class AuthProvider extends AsyncNotifier<void> {
     required String email,
     required String password,
   }) async {
-    await supabase.auth.signInWithPassword(email: email, password: password);
+    const AsyncValue.loading();
+    AsyncValue.guard(() async {
+      await supabase.auth.signInWithPassword(email: email, password: password);
+    });
   }
 
   Future<void> signOut() async {
-    await supabase.auth.signOut();
+    const AsyncValue.loading();
+    AsyncValue.guard(() async {
+      await supabase.auth.signOut();
+    });
   }
 }

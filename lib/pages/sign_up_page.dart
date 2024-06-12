@@ -170,6 +170,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               role: roleProvider,
                               verificationId: verificationController.text,
                             );
+                            userAuthProvider.signIn(
+                                email: emailController.text,
+                                password: passwordController.text);
                           }
                         },
                         child: const Text(

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_vet/pages/add_animal_page.dart';
 import 'package:my_vet/pages/greeting_page.dart';
 import 'package:my_vet/pages/home_page.dart';
+import 'package:my_vet/pages/my_profile_page.dart';
 import 'package:my_vet/pages/sign_in_page.dart';
 import 'package:my_vet/pages/sign_up_page.dart';
 import 'package:my_vet/providers/authevent_listenable_provider.dart';
@@ -70,6 +71,11 @@ final routerProvider = Provider<GoRouter>(
         parentNavigatorKey: _routerKey,
         path: '/sign_up',
         builder: (context, state) => const SignUpPage(),
+      ),
+      GoRoute(
+        parentNavigatorKey: _routerKey,
+        path: '/my_profile',
+        builder: (context, state) => const MyProfilePage(),
       ),
     ],
   ),

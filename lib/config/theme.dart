@@ -23,6 +23,13 @@ ThemeData myTheme = ThemeData(
       color: Color.fromARGB(237, 87, 126, 165),
     ),
   ),
+  iconButtonTheme: const IconButtonThemeData(
+    style: ButtonStyle(
+      iconColor: WidgetStatePropertyAll(
+        Colors.white,
+      ),
+    ),
+  ),
   inputDecorationTheme: const InputDecorationTheme(
     suffixIconColor: Color.fromARGB(237, 87, 126, 165),
     hintStyle: TextStyle(
