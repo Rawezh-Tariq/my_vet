@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_vet/providers/value_providers.dart';
+import 'package:my_vet/widgets/animal_image_field_widget.dart';
 import 'package:my_vet/widgets/animal_info_field_widget.dart';
 
 class AddAnimalPage extends ConsumerStatefulWidget {
@@ -24,30 +25,20 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
   @override
   Widget build(BuildContext context) {
     final fieldCount = ref.watch(fieldCountProvider);
+    final imageCount = ref.watch(imageCountProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Animal'),
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                onPressed: () {
-                  ref.read(fieldCountProvider.notifier).state++;
-                },
-                child: const Text(
-                  'Add Field',
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Add Image',
-                ),
-              ),
-            ],
+          TextButton(
+            onPressed: () {
+              ref.read(fieldCountProvider.notifier).state++;
+            },
+            child: const Text(
+              'Add Field',
+            ),
           ),
           Expanded(
             child: ListView.builder(
@@ -61,6 +52,31 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
                   child: AnimalInfoField(
                     titleController: titleController,
                     bodyController: bodyController,
+                  ),
+                );
+              },
+            ),
+          ),
+          const Divider(),
+          TextButton(
+            onPressed: () {
+              ref.read(imageCountProvider.notifier).state++;
+            },
+            child: const Text(
+              'Add Image',
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: imageCount,
+              itemBuilder: (context, index) {
+                return Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (_) {
+                    ref.read(imageCountProvider.notifier).state--;
+                  },
+                  child: AnimalImageField(
+                    titleController: titleController,
                   ),
                 );
               },

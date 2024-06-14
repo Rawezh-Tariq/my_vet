@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AnimalInfoField extends ConsumerWidget {
+class AnimalInfoField extends ConsumerStatefulWidget {
   final TextEditingController titleController;
   final TextEditingController bodyController;
   const AnimalInfoField({
@@ -11,16 +11,16 @@ class AnimalInfoField extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AnimalInfoFieldState();
+}
+
+class _AnimalInfoFieldState extends ConsumerState<AnimalInfoField> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color.fromARGB(237, 87, 126, 165),
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-      ),
       child: Column(
         children: [
           TextField(
@@ -28,7 +28,7 @@ class AnimalInfoField extends ConsumerWidget {
               FocusScope.of(context).unfocus();
             },
             style: Theme.of(context).textTheme.bodyMedium,
-            controller: titleController,
+            controller: widget.titleController,
             decoration: const InputDecoration(
               hintText: 'title',
             ),
@@ -38,7 +38,7 @@ class AnimalInfoField extends ConsumerWidget {
               FocusScope.of(context).unfocus();
             },
             style: Theme.of(context).textTheme.bodyMedium,
-            controller: bodyController,
+            controller: widget.bodyController,
             decoration: const InputDecoration(
               hintText: 'body',
             ),

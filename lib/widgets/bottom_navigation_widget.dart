@@ -15,9 +15,9 @@ class BottomNavigation extends ConsumerWidget {
     final bottomNavigationBarValue = ref.watch(bottomNavigationBarProvider);
     return Scaffold(
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: bottomNavigationBarValue,
-        onTap: (value) {
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: bottomNavigationBarValue,
+        onDestinationSelected: (value) {
           ref.read(bottomNavigationBarProvider.notifier).state = value;
           switch (value) {
             case 0:
@@ -31,16 +31,16 @@ class BottomNavigation extends ConsumerWidget {
               break;
           }
         },
-        items: const [
-          BottomNavigationBarItem(
+        destinations: const [
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.add),
             label: 'Add Animal',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.message_outlined),
             label: 'Message',
           ),

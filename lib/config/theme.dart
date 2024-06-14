@@ -55,9 +55,10 @@ ThemeData myTheme = ThemeData(
       ),
     ),
   ),
-  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+  dividerTheme:
+      const DividerThemeData(color: Color.fromARGB(237, 87, 126, 165)),
+  navigationBarTheme: const NavigationBarThemeData(
     backgroundColor: Color.fromARGB(237, 87, 126, 165),
-    selectedItemColor: Colors.white70,
-    unselectedItemColor: Colors.black,
+    indicatorColor: Colors.white70,
   ),
 );
