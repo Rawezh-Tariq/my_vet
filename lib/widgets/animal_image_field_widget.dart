@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_vet/providers/image_provider.dart';
 
 class AnimalImageField extends ConsumerWidget {
   final TextEditingController titleController;
@@ -10,6 +11,8 @@ class AnimalImageField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final imageProvider = ref.watch(imageFileProvider.notifier);
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
@@ -25,10 +28,20 @@ class AnimalImageField extends ConsumerWidget {
               hintText: 'title',
             ),
           ),
-          const SizedBox(height: 16),
-          Image.network(
-              height: 50,
-              'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png')
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: () {
+              imageProvider.pickImage();
+            },
+            child: const Text('Select Image'),
+          ),
+          imageProvider.grtImage != null
+              ? Image.file(
+                  imageProvider.grtImage!,
+                  width: 200,
+                  height: 200,
+                )
+              : Container(),
         ],
       ),
     );
