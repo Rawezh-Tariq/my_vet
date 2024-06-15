@@ -9,7 +9,7 @@ final imageFileProvider =
 
 class ImageProvider extends AsyncNotifier<File?> {
   @override
-  File? build() {
+  FutureOr<File?> build() {
     return null;
   }
 

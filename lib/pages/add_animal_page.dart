@@ -12,13 +12,23 @@ class AddAnimalPage extends ConsumerStatefulWidget {
 }
 
 class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
-  final titleController = TextEditingController();
-  final bodyController = TextEditingController();
+  final titleInfoControllers = <TextEditingController>[];
+  final bodyInfoControllers = <TextEditingController>[];
+  final titleImageControllers = <TextEditingController>[];
 
   @override
   void dispose() {
-    titleController.dispose();
-    bodyController.dispose();
+    for (var controller in titleInfoControllers) {
+      controller.dispose();
+    }
+    for (var controller in bodyInfoControllers) {
+      controller.dispose();
+    }
+
+    for (var controller in titleImageControllers) {
+      controller.dispose();
+    }
+
     super.dispose();
   }
 
@@ -26,6 +36,16 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
   Widget build(BuildContext context) {
     final fieldCount = ref.watch(fieldCountProvider);
     final imageCount = ref.watch(imageCountProvider);
+
+    for (var index = 0; index < fieldCount; index++) {
+      titleInfoControllers.add(TextEditingController());
+      bodyInfoControllers.add(TextEditingController());
+    }
+
+    for (var index = 0; index < imageCount; index++) {
+      titleImageControllers.add(TextEditingController());
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Animal'),
@@ -48,10 +68,12 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
                   key: UniqueKey(),
                   onDismissed: (_) {
                     ref.read(fieldCountProvider.notifier).state--;
+                    titleInfoControllers.removeAt(index);
+                    bodyInfoControllers.removeAt(index);
                   },
                   child: AnimalInfoField(
-                    titleController: titleController,
-                    bodyController: bodyController,
+                    titleController: titleInfoControllers[index],
+                    bodyController: bodyInfoControllers[index],
                   ),
                 );
               },
@@ -74,9 +96,10 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
                   key: UniqueKey(),
                   onDismissed: (_) {
                     ref.read(imageCountProvider.notifier).state--;
+                    titleImageControllers.removeAt(index);
                   },
                   child: AnimalImageField(
-                    titleController: titleController,
+                    titleController: titleImageControllers[index],
                   ),
                 );
               },
