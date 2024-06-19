@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AnimalInfoField extends ConsumerStatefulWidget {
   final TextEditingController titleController;
   final TextEditingController bodyController;
+  final Function()? remove;
   const AnimalInfoField({
     super.key,
     required this.titleController,
     required this.bodyController,
+    required this.remove,
   });
 
   @override
@@ -42,6 +44,10 @@ class _AnimalInfoFieldState extends ConsumerState<AnimalInfoField> {
             decoration: const InputDecoration(
               hintText: 'body',
             ),
+          ),
+          TextButton(
+            onPressed: widget.remove,
+            child: const Text('Delete'),
           ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_vet/providers/value_providers.dart';
+import 'package:my_vet/providers/form_fields_provider.dart';
 import 'package:my_vet/widgets/animal_image_field_widget.dart';
 import 'package:my_vet/widgets/animal_info_field_widget.dart';
 
@@ -34,15 +34,12 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
 
   @override
   Widget build(BuildContext context) {
-    final fieldCount = ref.watch(fieldCountProvider);
-    final imageCount = ref.watch(imageCountProvider);
+    final fieldList = ref.watch(formFieldsProvider);
+    final formFieldProvider = ref.read(formFieldsProvider.notifier);
 
-    for (var index = 0; index < fieldCount; index++) {
+    for (var i = 0; i <= fieldList.length; i++) {
       titleInfoControllers.add(TextEditingController());
       bodyInfoControllers.add(TextEditingController());
-    }
-
-    for (var index = 0; index < imageCount; index++) {
       titleImageControllers.add(TextEditingController());
     }
 
@@ -50,62 +47,37 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
       appBar: AppBar(
         title: const Text('Add Animal'),
       ),
-      body: Column(
-        children: [
-          TextButton(
-            onPressed: () {
-              ref.read(fieldCountProvider.notifier).state++;
-            },
-            child: const Text(
-              'Add Field',
-            ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              TextButton(
+                onPressed: () {
+                  formFieldProvider.addField(AnimalInfoField(
+                    titleController: titleInfoControllers[fieldList.length],
+                    bodyController: bodyInfoControllers[fieldList.length],
+                    remove: formFieldProvider.removeField,
+                    key: UniqueKey(),
+                  ));
+                },
+                child: const Text(
+                  'Add Text Field',
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  formFieldProvider.addField(AnimalImageField(
+                    titleController: titleImageControllers[fieldList.length],
+                  ));
+                },
+                child: const Text(
+                  'Add Image Field',
+                ),
+              ),
+              ...fieldList,
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: fieldCount,
-              itemBuilder: (context, index) {
-                return Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (_) {
-                    ref.read(fieldCountProvider.notifier).state--;
-                    titleInfoControllers.removeAt(index);
-                    bodyInfoControllers.removeAt(index);
-                  },
-                  child: AnimalInfoField(
-                    titleController: titleInfoControllers[index],
-                    bodyController: bodyInfoControllers[index],
-                  ),
-                );
-              },
-            ),
-          ),
-          const Divider(),
-          TextButton(
-            onPressed: () {
-              ref.read(imageCountProvider.notifier).state++;
-            },
-            child: const Text(
-              'Add Image',
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: imageCount,
-              itemBuilder: (context, index) {
-                return Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (_) {
-                    ref.read(imageCountProvider.notifier).state--;
-                    titleImageControllers.removeAt(index);
-                  },
-                  child: AnimalImageField(
-                    titleController: titleImageControllers[index],
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
