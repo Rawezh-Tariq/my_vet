@@ -23,8 +23,4 @@ class ImageProvider extends AsyncNotifier<File?> {
       state = const AsyncValue.data(null);
     }
   }
-
-  File? get grtImage {
-    return state.value;
-  }
 }
