@@ -51,6 +51,7 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
                     AnimalImageFieldWidget(
                       remove: () {
                         fieldsNotifier.removeField(myIndex);
+                        index--;
                       },
                     ),
                     index,
