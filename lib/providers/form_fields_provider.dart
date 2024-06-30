@@ -8,7 +8,6 @@ class MyFormField {
 }
 
 class FormFieldsProvider extends Notifier<List<MyFormField>> {
-  int index = 0;
   @override
   List<MyFormField> build() {
     return [];
@@ -16,13 +15,15 @@ class FormFieldsProvider extends Notifier<List<MyFormField>> {
 
   void addField(Widget field, int index) {
     MyFormField myFormField = MyFormField(field: field, index: index);
+
     state = [...state, myFormField];
-    this.index++;
   }
 
   void removeField(int index) {
-    this.index--;
-    state = [...state..removeWhere((element) => element.index == index)];
+    state.removeWhere(
+      (element) => element.index == index,
+    );
+    state = [...state];
   }
 }
 

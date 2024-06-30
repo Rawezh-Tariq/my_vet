@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AnimalImageFieldWidget extends ConsumerWidget {
-  final TextEditingController titleController;
-  final void Function() remove;
-  const AnimalImageFieldWidget({
-    super.key,
-    required this.titleController,
-    required this.remove,
-  });
+class AnimalImageFieldWidget extends ConsumerStatefulWidget {
+  final void Function()? remove;
+  const AnimalImageFieldWidget({super.key, required this.remove});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _State();
+}
+
+class _State extends ConsumerState<AnimalImageFieldWidget> {
+  final titleController = TextEditingController();
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         TextField(
@@ -23,7 +31,7 @@ class AnimalImageFieldWidget extends ConsumerWidget {
           fallbackWidth: 100.0,
           child: Icon(Icons.image_outlined),
         ),
-        TextButton(onPressed: remove, child: const Text('remove')),
+        TextButton(onPressed: widget.remove, child: const Text('remove')),
       ],
     );
   }
