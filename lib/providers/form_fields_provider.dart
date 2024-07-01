@@ -20,10 +20,11 @@ class FormFieldsProvider extends Notifier<List<MyFormField>> {
   }
 
   void removeField(int index) {
-    state.removeWhere(
-      (element) => element.index == index,
-    );
-    state = [...state];
+    state = state
+        .where(
+          (element) => element.index != index,
+        )
+        .toList();
   }
 }
 

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AnimalInfoFieldWidget extends ConsumerStatefulWidget {
-  final void Function()? remove;
-  const AnimalInfoFieldWidget({super.key, required this.remove});
+  const AnimalInfoFieldWidget({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _State();
@@ -31,10 +30,6 @@ class _State extends ConsumerState<AnimalInfoFieldWidget> {
         TextField(
           controller: bodyController,
           decoration: const InputDecoration(labelText: 'body'),
-        ),
-        TextButton(
-          onPressed: widget.remove,
-          child: const Text('remove'),
         ),
       ],
     );

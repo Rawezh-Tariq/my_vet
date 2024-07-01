@@ -31,11 +31,12 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
                 onPressed: () {
                   final myIndex = index;
                   fieldsNotifier.addField(
-                    AnimalInfoFieldWidget(
-                      remove: () {
+                    Dismissible(
+                      key: ValueKey(myIndex),
+                      onDismissed: (_) {
                         fieldsNotifier.removeField(myIndex);
-                        index--;
                       },
+                      child: const AnimalInfoFieldWidget(),
                     ),
                     myIndex,
                   );
@@ -48,13 +49,14 @@ class _AddAnimalPageState extends ConsumerState<AddAnimalPage> {
                 onPressed: () {
                   final myIndex = index;
                   fieldsNotifier.addField(
-                    AnimalImageFieldWidget(
-                      remove: () {
+                    Dismissible(
+                      key: ValueKey(myIndex),
+                      onDismissed: (_) {
                         fieldsNotifier.removeField(myIndex);
-                        index--;
                       },
+                      child: const AnimalImageFieldWidget(),
                     ),
-                    index,
+                    myIndex,
                   );
                   index++;
                 },
